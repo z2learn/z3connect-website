@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Z3Connect Projects - Portfolio of custom web apps, mobile applications, CRM, ERP, and AI solutions.">
+    <title>Z3Connect | Our Projects</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #010826;
+            --secondary: #1a237e;
+            --accent: #4f46e5;
+            --accent-light: #6366f1;
+            --text: #e2e8f0;
+            --light: #1e293b;
+            --dark: #010826;
+            --gradient: linear-gradient(135deg, var(--accent) 0%, #7c3aed 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, sans-serif;
+        }
+
+        body {
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--primary);
+            overflow-x: hidden;
+        }
+
+        /* Mobile Menu Styles */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 1001;
+            padding: 0.5rem;
+        }
+
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100vh;
+            background: var(--primary);
+            padding: 6rem 2rem 2rem;
+            transition: left 0.3s ease;
+            z-index: 1000;
+        }
+
+        .mobile-menu.active {
+            left: 0;
+        }
+
+        .mobile-menu a {
+            display: block;
+            padding: 1rem;
+            color: var(--text);
+            text-decoration: none;
+            font-size: 1.2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: background 0.3s ease;
+        }
+
+        .mobile-menu a:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(1, 8, 38, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 1.5rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 8rem 2rem 4rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%234f46e5' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.1;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            margin-bottom: 1.5rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Project Categories */
+        .category-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem auto;
+            padding: 2rem;
+            max-width: 1200px;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+
+        .category-tab {
+            background: var(--light);
+            color: var(--text);
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: clamp(0.875rem, 1.5vw, 1rem);
+        }
+
+        .category-tab.active, .category-tab:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
+        }
+
+        /* Projects Grid */
+        .projects-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: var(--light);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent);
+            box-shadow: 0 10px 30px rgba(79, 70, 229, 0.2);
+        }
+
+        .project-image {
+            width: 100%;
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent 0%, rgba(1, 8, 38, 0.8) 100%);
+        }
+
+        .project-content {
+            padding: 1.5rem;
+        }
+
+        .project-title {
+            font-size: 1.5rem;
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .project-description {
+            margin-bottom: 1.5rem;
+            color: var(--text);
+            opacity: 0.9;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tag {
+            background: rgba(79, 70, 229, 0.2);
+            color: var(--text);
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            border: 1px solid rgba(79, 70, 229, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .tag:hover {
+            background: rgba(79, 70, 229, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* WhatsApp Button */
+        .whatsapp-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #25d366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 30px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            text-decoration: none;
+        }
+
+        .whatsapp-button:hover {
+            transform: scale(1.1) rotate(10deg);
+            box-shadow: 0 6px 15px rgba(37, 211, 102, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            padding: 4rem 2rem;
+            margin-top: 4rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-section h3 {
+            color: white;
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            color: var(--text);
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+            }
+
+            .category-tabs {
+                padding: 1rem;
+            }
+
+            .category-tab {
+                padding: 0.5rem 1rem;
+                font-size: 0.875rem;
+            }
+
+            .whatsapp-button {
+                width: 50px;
+                height: 50px;
+                font-size: 24px;
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-section {
+                text-align: center;
+            }
+
+            .social-links {
+                justify-content: center;
+            }
+        }
+
+        /* Animation Keyframes */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <style>
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(1, 8, 38, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 1.5rem;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        /* Updated mobile menu button styles */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 1001;
+            padding: 0.5rem;
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        /* Updated mobile menu styles */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100vh;
+            background: var(--primary);
+            padding: 6rem 2rem 2rem;
+            transition: left 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .mobile-menu.active {
+            left: 0;
+        }
+        
+        /* Critical update for mobile responsiveness */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0.8rem 1rem;
+            }
+            
+            .logo {
+                font-size: 1.3rem;
+                /* Ensure logo stays visible */
+                position: relative;
+                z-index: 1002;
+            }
+        
+            .mobile-menu-btn {
+                display: block;
+            }
+        
+            .nav-links {
+                display: none;
+            }
+        
+            .mobile-menu {
+                display: block;
+            }
+        }
+        
+        /* Additional style to ensure content doesn't overlap with fixed navbar */
+        body {
+            padding-top: 60px; /* Adjust this value based on your navbar height */
+        }
+        </style>
+        
+        <!-- Update the HTML structure -->
+        <nav class="navbar">
+            <div class="nav-content">
+                <a href="index.html" class="logo">Z3Connect</a>
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="nav-links">
+                    <a href="index.html">Home</a>
+                    <a href="projects.html">Projects</a>
+                    <a href="services.html">Services</a>
+                    <a href="contact.html">Contact</a>
+                </div>
+            </div>
+        </nav>
+        
+        <!-- Mobile Menu -->
+        <div class="mobile-menu">
+            <a href="index.html">Home</a>
+            <a href="projects.html">Projects</a>
+            <a href="services.html">Services</a>
+            <a href="contact.html">Contact</a>
+        </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1 data-aos="fade-up">Our Projects</h1>
+        <p data-aos="fade-up" data-aos-delay="100">Explore our portfolio of innovative solutions across various industries</p>
+    </section>
+
+    <!-- Category Tabs -->
+    <div class="category-tabs" data-aos="fade-up">
+        <div class="category-tab active" data-category="all">All</div>
+        <div class="category-tab" data-category="web">Web Apps</div>
+        <div class="category-tab" data-category="mobile">Mobile Apps</div>
+        <div class="category-tab" data-category="enterprise">Enterprise Solutions</div>
+        <div class="category-tab" data-category="ai">AI & ML</div>
+    </div>
+
+    <!-- Projects Grid -->
+    <div class="projects-grid">
+        <!-- Enterprise CRM Project -->
+        <div class="project-card" data-aos="fade-up" data-category="enterprise">
+            <div class="project-image" style="background-image: url('/api/placeholder/400/200')"></div>
+            <div class="project-content">
+                <h3 class="project-title">Enterprise CRM System</h3>
+                <p class="project-description">Custom CRM solution with AI-powered lead scoring, automation workflows, and integrated billing system. Built for scale with React and Node.js.</p>
+                <div class="project-tags">
+                    <span class="tag">CRM</span>
+                    <span class="tag">React</span>
+                    <span class="tag">Node.js</span>
+                    <span class="tag">AI</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Restaurant Management Project -->
+        <div class="project-card" data-aos="fade-up" data-aos-delay="100" data-category="mobile">
+            <div class="project-image" style="background-image: url('/api/placeholder/400/200')"></div>
+            <div class="project-content">
+                <h3 class="project-title">Restaurant Management Suite</h3>
+                <p class="project-description">Complete restaurant management solution with POS, inventory tracking, and customer loyalty program. Available on web and mobile platforms.</p>
+                <div class="project-tags">
+                    <span class="tag">Flutter</span>
+                    <span class="tag">Firebase</span>
+                    <span class="tag">iOS</span>
+                    <span class="tag">Android</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- LMS Platform Project -->
+        <div class="project-card" data-aos="fade-up" data-aos-delay="200" data-category="web">
+            <div class="project-image" style="background-image: url('/api/placeholder/400/200')"></div>
+            <div class="project-content">
+                <h3 class="project-title">AI-Powered LMS Platform</h3>
+                <p class="project-description">Modern learning management system with video conferencing, course creation tools, and progress tracking. Features AI-powered content recommendations.</p>
+                <div class="project-tags">
+                    <span class="tag">LMS</span>
+                    <span class="tag">React</span>
+                    <span class="tag">ML</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Finance Management Project -->
+        <div class="project-card" data-aos="fade-up" data-aos-delay="300" data-category="enterprise">
+            <div class="project-image" style="background-image: url('/api/placeholder/400/200')"></div>
+            <div class="project-content">
+                <h3 class="project-title">Finance Management System</h3>
+                <p class="project-description">Comprehensive financial management solution with expense tracking, budgeting, and automated reporting. Includes AI-powered forecasting.</p>
+                <div class="project-tags">
+                    <span class="tag">Finance</span>
+                    <span class="tag">AI</span>
+                    <span class="tag">Analytics</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Project Management Tool -->
+        <div class="project-card" data-aos="fade-up" data-aos-delay="400" data-category="web">
+            <div class="project-image" style="background-image: url('/api/placeholder/400/200')"></div>
+            <div class="project-content">
+                <h3 class="project-title">Agile Project Management</h3>
+                <p class="project-description">Agile project management platform with real-time collaboration, resource allocation, and automated task prioritization using ML.</p>
+                <div class="project-tags">
+                    <span class="tag">Project Management</span>
+                    <span class="tag">ML</span>
+                    <span class="tag">React</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ERP Solution Project -->
+        <div class="project-card" data-aos="fade-up" data-aos-delay="500" data-category="enterprise">
+            <div class="project-image" style="background-image: url('/api/placeholder/400/200')"></div>
+            <div class="project-content">
+                <h3 class="project-title">Smart ERP Solution</h3>
+                <p class="project-description">Integrated ERP system with modules for inventory, HR, finance, and supply chain management. Features AI-powered analytics dashboard.</p>
+                <div class="project-tags">
+                    <span class="tag">ERP</span>
+                    <span class="tag">Enterprise</span>
+                    <span class="tag">Analytics</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section" data-aos="fade-up">
+                <h3>About Z3Connect</h3>
+                <p>Leading provider of AI-powered business solutions, helping companies transform and scale their operations through innovative technology.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-section" data-aos="fade-up" data-aos-delay="100">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#">Projects</a></li>
+                    <li><a href="#">Pricing</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section" data-aos="fade-up" data-aos-delay="200">
+                <h3>Services</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Custom Development</a></li>
+                    <li><a href="#">AI Integration</a></li>
+                    <li><a href="#">Business Tools</a></li>
+                    <li><a href="#">Automation</a></li>
+                    <li><a href="#">Social Media Tools</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section" data-aos="fade-up" data-aos-delay="300">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-phone"></i> +91 93602 20928</p>
+                <p><i class="fas fa-envelope"></i> info@z3connect.com</p>
+                <p><i class="fas fa-map-marker-alt"></i> Chennai, Tamil Nadu, India</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Z3Connect. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Button -->
+    <a href="https://wa.me/919360220928" class="whatsapp-button" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 100,
+            delay: 100,
+            easing: 'ease-in-out'
+        });
+
+        // Mobile Menu Toggle
+        const menuBtn = document.querySelector('.mobile-menu-btn');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        let isMenuOpen = false;
+
+        menuBtn.addEventListener('click', () => {
+            isMenuOpen = !isMenuOpen;
+            mobileMenu.classList.toggle('active');
+            menuBtn.innerHTML = isMenuOpen ? 
+                '<i class="fas fa-times"></i>' : 
+                '<i class="fas fa-bars"></i>';
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (isMenuOpen && !mobileMenu.contains(e.target) && !menuBtn.contains(e.target)) {
+                mobileMenu.classList.remove('active');
+                menuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                isMenuOpen = false;
+            }
+        });
+
+        // Category Filtering
+        const categoryTabs = document.querySelectorAll('.category-tab');
+        const projectCards = document.querySelectorAll('.project-card');
+
+        categoryTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Update active tab
+                categoryTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+
+                // Filter projects
+                const category = tab.getAttribute('data-category');
+                projectCards.forEach(card => {
+                    if (category === 'all' || card.getAttribute('data-category') === category) {
+                        card.style.display = 'block';
+                        setTimeout(() => card.style.opacity = '1', 10);
+                    } else {
+                        card.style.opacity = '0';
+                        setTimeout(() => card.style.display = 'none', 300);
+                    }
+                });
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.padding = '0.8rem 1rem';
+                navbar.style.background = 'rgba(1, 8, 38, 0.98)';
+            } else {
+                navbar.style.padding = '1rem';
+                navbar.style.background = 'rgba(1, 8, 38, 0.95)';
+            }
+        });
+    </script>
+</body>
+</html>
