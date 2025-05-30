@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,8 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Z3Connect</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="icon" href="/image/icon/z3icon.ico" type="image/x-icon" />
-
   <script>
     tailwind.config = {
       theme: {
@@ -78,7 +77,7 @@
     
     html {
       scroll-behavior: smooth;
-      scroll-padding-top: 2rem;
+      scroll-padding-top: 2rem; /* Adjusted for fixed header consideration */
     }
     
     body {
@@ -116,7 +115,7 @@
     }
     
     .glass-dark {
-      background: rgba(0, 0, 0, 0.4);
+      background: rgba(0, 0, 0, 0.4); /* Darker glass for sidebar */
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
       border: 1px solid rgba(255, 255, 255, 0.05);
@@ -181,7 +180,7 @@
       height: 100%;
       background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIGJhc2VGcmVxdWVuY3k9Ii43NSIgc3RpdGNoVGlsZXM9InN0aXRjaCIgdHlwZT0iZnJhY3RhbE5vaXNlIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxwYXRoIGQ9Ik0wIDBoMzAwdjMwMEgweiIgZmlsdGVyPSJ1cmwoI2EpIiBvcGFjaXR5PSIuMDUiLz48L3N2Zz4=');
       pointer-events: none;
-      z-index: 100;
+      z-index: 100; /* Kept as is, sidebar will be z-[110] */
       opacity: 0.4;
     }
     
@@ -195,28 +194,6 @@
       z-index: 999;
       width: 0%;
       transition: width 0.1s ease;
-    }
-    
-    /* Mobile menu */
-    .mobile-menu {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: rgba(0, 0, 0, 0.95);
-      backdrop-filter: blur(10px);
-      z-index: 100;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      transform: translateY(-100%);
-      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    
-    .mobile-menu.active {
-      transform: translateY(0);
     }
     
     /* Custom button */
@@ -345,16 +322,16 @@
       <!-- Desktop Navigation -->
       <nav class="hidden md:block">
         <ul class="flex items-center space-x-1">
-          <li><a href="solutions-detailed.html" class="inline-block py-2 px-4 rounded-lg text-sm uppercase tracking-widest opacity-70 hover:opacity-100 hover:glass transition-all">Solutions</a></li>         
-          <li><a href="portfolio.html" class="inline-block py-2 px-4 rounded-lg text-sm uppercase tracking-widest opacity-70 hover:opacity-100 hover:glass transition-all">Portfolio</a></li>
+          <li><a href="#hero" class="inline-block py-2 px-4 rounded-lg text-sm uppercase tracking-widest opacity-70 hover:opacity-100 hover:glass transition-all">Home</a></li>
+          <li><a href="#solutions" class="inline-block py-2 px-4 rounded-lg text-sm uppercase tracking-widest opacity-70 hover:opacity-100 hover:glass transition-all">Solutions</a></li>
+          <li><a href="#why-us" class="inline-block py-2 px-4 rounded-lg text-sm uppercase tracking-widest opacity-70 hover:opacity-100 hover:glass transition-all">Why Us</a></li>
           <li><a href="#industries" class="inline-block py-2 px-4 rounded-lg text-sm uppercase tracking-widest opacity-70 hover:opacity-100 hover:glass transition-all">Industries</a></li>
-          <li><a href="products.html" class="inline-block py-2 px-4 rounded-lg text-sm uppercase tracking-widest opacity-70 hover:opacity-100 hover:glass transition-all">Our Products</a></li>
-          <li><a href="get-quote.html" class="inline-block py-2 px-4 rounded-lg text-sm uppercase tracking-widest opacity-70 hover:opacity-100 hover:glass transition-all">Get a Quote</a></li>
+          <li><a href="#case-studies" class="inline-block py-2 px-4 rounded-lg text-sm uppercase tracking-widest opacity-70 hover:opacity-100 hover:glass transition-all">Case Studies</a></li>
         </ul>
       </nav>
       
-      <!-- Mobile menu button -->
-      <button id="mobile-menu-button" class="md:hidden glass p-2 rounded-lg" aria-label="Menu">
+      <!-- Sidebar Trigger Button (replaces old mobile menu button) -->
+      <button id="sidebar-trigger-button" class="glass p-2 rounded-lg" aria-label="Menu">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16" />
         </svg>
@@ -362,23 +339,22 @@
     </div>
   </header>
   
-  <!-- Mobile Menu -->
-  <div id="mobile-menu" class="mobile-menu">
-    <button id="mobile-menu-close" class="absolute top-5 right-5 p-3 glass rounded-full">
+  <!-- Sidebar Menu -->
+  <div id="sidebar-menu" class="fixed top-0 right-0 h-full w-72 sm:w-80 glass-dark shadow-2xl z-[110] transform translate-x-full transition-transform duration-300 ease-in-out p-6 flex flex-col">
+    <button id="sidebar-close-button" class="self-end p-2 mb-6 glass rounded-full hover:bg-white/10 transition-colors" aria-label="Close menu">
       <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12" />
       </svg>
     </button>
-    
-    <ul class="flex flex-col items-center space-y-6">
-      <li><a href="solutions-detailed.html" class="mobile-link text-3xl font-display uppercase tracking-wider">Solutions</a></li> 
-      <li><a href="portfolio.html" class="mobile-link text-3xl font-display uppercase tracking-wider">Portfolio</a></li>
-      <li><a href="#industries" class="mobile-link text-3xl font-display uppercase tracking-wider">Industries</a></li>
-      <li><a href="products.html" class="mobile-link text-3xl font-display uppercase tracking-wider">Our Products</a></li>
-      <li><a href="get-quote.html" class="mobile-link text-3xl font-display uppercase tracking-wider">Get a Quote</a></li>
+    <ul class="flex flex-col space-y-4">
+      <li><a href="#hero" class="sidebar-link block py-3 px-4 rounded-lg text-xl font-display uppercase tracking-wider hover:bg-white/10 transition-colors">Home</a></li>
+      <li><a href="#solutions" class="sidebar-link block py-3 px-4 rounded-lg text-xl font-display uppercase tracking-wider hover:bg-white/10 transition-colors">Solutions</a></li>
+      <li><a href="#why-us" class="sidebar-link block py-3 px-4 rounded-lg text-xl font-display uppercase tracking-wider hover:bg-white/10 transition-colors">Why Us</a></li>
+      <li><a href="#industries" class="sidebar-link block py-3 px-4 rounded-lg text-xl font-display uppercase tracking-wider hover:bg-white/10 transition-colors">Industries</a></li>
+      <li><a href="#case-studies" class="sidebar-link block py-3 px-4 rounded-lg text-xl font-display uppercase tracking-wider hover:bg-white/10 transition-colors">Case Studies</a></li>
+      <li><a href="#contact" class="sidebar-link block py-3 px-4 rounded-lg text-xl font-display uppercase tracking-wider hover:bg-white/10 transition-colors">Contact</a></li>
     </ul>
-    
-    <div class="absolute bottom-10 left-0 right-0 text-center">
+    <div class="mt-auto text-center">
       <div class="text-sm uppercase tracking-widest opacity-50">© 2025 Z3Connect</div>
     </div>
   </div>
@@ -438,32 +414,47 @@
     </div>
   </section>
 
-  <!-- JavaScript for mobile menu -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // Mobile Menu Toggle
-      const mobileMenuButton = document.getElementById('mobile-menu-button');
-      const mobileMenuClose = document.getElementById('mobile-menu-close');
-      const mobileMenu = document.getElementById('mobile-menu');
-      const mobileLinks = document.querySelectorAll('.mobile-link');
-      
-      if (mobileMenuButton && mobileMenu && mobileMenuClose) {
-        mobileMenuButton.addEventListener('click', () => {
-          mobileMenu.classList.add('active');
-          document.body.style.overflow = 'hidden';
-        });
-        
-        mobileMenuClose.addEventListener('click', () => {
-          mobileMenu.classList.remove('active');
-          document.body.style.overflow = '';
-        });
-        
-        mobileLinks.forEach(link => {
-          link.addEventListener('click', () => {
-            mobileMenu.classList.remove('active');
-            document.body.style.overflow = '';
+      // Sidebar Menu Toggle
+      const sidebarTriggerButton = document.getElementById('sidebar-trigger-button');
+      const sidebarMenu = document.getElementById('sidebar-menu');
+
+      if (sidebarTriggerButton && sidebarMenu) {
+          const sidebarCloseButton = document.getElementById('sidebar-close-button');
+          const sidebarLinks = sidebarMenu.querySelectorAll('.sidebar-link');
+
+          function openSidebar() {
+              sidebarMenu.classList.remove('translate-x-full');
+              sidebarMenu.classList.add('translate-x-0');
+              document.body.style.overflow = 'hidden';
+          }
+
+          function closeSidebar() {
+              sidebarMenu.classList.remove('translate-x-0');
+              sidebarMenu.classList.add('translate-x-full');
+              document.body.style.overflow = '';
+          }
+
+          sidebarTriggerButton.addEventListener('click', () => {
+              if (sidebarMenu.classList.contains('translate-x-0')) {
+                  closeSidebar();
+              } else {
+                  openSidebar();
+              }
           });
-        });
+
+          if (sidebarCloseButton) {
+              sidebarCloseButton.addEventListener('click', closeSidebar);
+          }
+
+          sidebarLinks.forEach(link => {
+              link.addEventListener('click', () => {
+                  if (link.getAttribute('href').startsWith('#')) {
+                      closeSidebar();
+                  }
+              });
+          });
       }
       
       // Progress bar
@@ -587,53 +578,52 @@
           </div>
         </div>
         
-        <div class="order-1 md:order-2">
-          <!-- Floating icons with glass morphism - Made more compact for mobile -->
-          <div class="relative h-64 sm:h-80 md:h-96">
+        <div class="order-1 md:order-2 flex justify-center items-center">
+          <div class="grid grid-cols-2 gap-4 sm:gap-6 md:gap-8 p-4">
             <!-- Icon 1 -->
-            <div class="absolute top-0 left-[20%] animate-float" style="animation-delay: 0s;">
-              <div class="glass p-6 md:p-8 rounded-2xl backdrop-blur-xl">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 md:h-12 md:w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div class="animate-float" style="animation-delay: 0s;">
+              <div class="glass p-4 sm:p-6 rounded-2xl backdrop-blur-xl">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 sm:h-8 sm:w-8 md:h-10 md:w-10 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                 </svg>
               </div>
-              <div class="text-center mt-2 md:mt-4 uppercase tracking-widest text-xs">
+              <div class="text-center mt-2 uppercase tracking-widest text-xs">
                 <span>Custom Solutions</span>
               </div>
             </div>
             
             <!-- Icon 2 -->
-            <div class="absolute top-[25%] right-[10%] animate-float" style="animation-delay: 0.5s;">
-              <div class="glass p-6 md:p-8 rounded-2xl backdrop-blur-xl">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 md:h-12 md:w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div class="animate-float" style="animation-delay: 0.2s;">
+              <div class="glass p-4 sm:p-6 rounded-2xl backdrop-blur-xl">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 sm:h-8 sm:w-8 md:h-10 md:w-10 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
                 </svg>
               </div>
-              <div class="text-center mt-2 md:mt-4 uppercase tracking-widest text-xs">
+              <div class="text-center mt-2 uppercase tracking-widest text-xs">
                 <span>Latest Tech</span>
               </div>
             </div>
             
             <!-- Icon 3 -->
-            <div class="absolute bottom-[15%] left-[10%] animate-float" style="animation-delay: 1s;">
-              <div class="glass p-6 md:p-8 rounded-2xl backdrop-blur-xl">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 md:h-12 md:w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div class="animate-float" style="animation-delay: 0.4s;">
+              <div class="glass p-4 sm:p-6 rounded-2xl backdrop-blur-xl">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 sm:h-8 sm:w-8 md:h-10 md:w-10 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
               </div>
-              <div class="text-center mt-2 md:mt-4 uppercase tracking-widest text-xs">
+              <div class="text-center mt-2 uppercase tracking-widest text-xs">
                 <span>Fast Delivery</span>
               </div>
             </div>
             
             <!-- Icon 4 -->
-            <div class="absolute bottom-[5%] right-[20%] animate-float" style="animation-delay: 1.5s;">
-              <div class="glass p-6 md:p-8 rounded-2xl backdrop-blur-xl">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 md:h-12 md:w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div class="animate-float" style="animation-delay: 0.6s;">
+              <div class="glass p-4 sm:p-6 rounded-2xl backdrop-blur-xl">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 sm:h-8 sm:w-8 md:h-10 md:w-10 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
               </div>
-              <div class="text-center mt-2 md:mt-4 uppercase tracking-widest text-xs">
+              <div class="text-center mt-2 uppercase tracking-widest text-xs">
                 <span>Ongoing Support</span>
               </div>
             </div>
@@ -787,7 +777,7 @@
   
   <!-- JavaScript for counter animation -->
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', () => { // This merges with the one above for sidebar
       // Counter animation with improved performance
       const counters = document.querySelectorAll('.counter-value');
       
@@ -797,10 +787,9 @@
             const countTarget = parseInt(entry.target.dataset.count);
             let currentCount = 0;
             
-            // Calculate appropriate duration based on target value
-            const duration = 2000; // 2 seconds total
-            const interval = Math.max(10, Math.floor(duration / countTarget)); // Ensure not too many updates
-            const step = Math.max(1, Math.ceil(countTarget / (duration / interval))); // Calculate step size
+            const duration = 2000; 
+            const interval = Math.max(10, Math.floor(duration / countTarget)); 
+            const step = Math.max(1, Math.ceil(countTarget / (duration / interval))); 
             
             const countInterval = setInterval(() => {
               currentCount = Math.min(currentCount + step, countTarget);
@@ -982,7 +971,7 @@
       
       <!-- Contact button with glow effect -->
       <div id="contact" class="mt-10 md:mt-20 opacity-0 animate-slide-up" style="animation-delay: 0.9s;">
-        <a href="mailto:z3connect.z3connect@gmail.com" class="btn-glow inline-block px-6 py-3 md:px-8 md:py-4 glass hover:glass-hover rounded-full text-xs md:text-sm uppercase tracking-widest backdrop-blur-xl relative animate-pulse-glow">
+        <a href="mailto:z3connect.office@gmail.com" class="btn-glow inline-block px-6 py-3 md:px-8 md:py-4 glass hover:glass-hover rounded-full text-xs md:text-sm uppercase tracking-widest backdrop-blur-xl relative animate-pulse-glow">
           <span class="relative z-10">Let's discuss your project</span>
         </a>
       </div>
@@ -991,11 +980,11 @@
   
   <!-- Additional JavaScript for better mobile experience -->
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', () => { // This merges with other DOMContentLoaded listeners
       // Improved mouse follower for mobile
       const mouseFollower = document.querySelector('.mouse-follower');
       
-      if (window.innerWidth > 768) { // Only show mouse follower on larger screens
+      if (window.innerWidth > 768) { 
         document.addEventListener('mousemove', (e) => {
           if (mouseFollower) {
             mouseFollower.style.left = e.clientX + 'px';
@@ -1004,7 +993,6 @@
           }
         });
         
-        // Handle hover states for interactive elements
         const interactiveElements = document.querySelectorAll('a, button, .project-card');
         interactiveElements.forEach(el => {
           el.addEventListener('mouseenter', () => {
@@ -1020,33 +1008,36 @@
           });
         });
       } else if (mouseFollower) {
-        mouseFollower.style.display = 'none'; // Hide on mobile
+        mouseFollower.style.display = 'none'; 
       }
       
       // Optimize animations for mobile
       if (window.innerWidth < 768) {
         const heavyAnimations = document.querySelectorAll('.animate-float');
         heavyAnimations.forEach(el => {
-          el.style.animationDuration = '8s'; // Slow down animations on mobile for better performance
+          el.style.animationDuration = '8s'; 
         });
       }
       
       // Smooth scroll for anchor links with offset for fixed header
       document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
-          e.preventDefault();
-          
-          const targetId = this.getAttribute('href');
-          const targetElement = document.querySelector(targetId);
-          
-          if (targetElement) {
-            const navHeight = document.querySelector('nav')?.offsetHeight || 0;
-            const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+          const href = this.getAttribute('href');
+          if (href.startsWith('#') && href.length > 1) { 
+            e.preventDefault();
+            const targetId = href;
+            const targetElement = document.querySelector(targetId);
             
-            window.scrollTo({
-              top: targetPosition - navHeight - 20, // Additional offset
-              behavior: 'smooth'
-            });
+            if (targetElement) {
+              const header = document.querySelector('header.fixed');
+              const headerHeight = header ? header.offsetHeight : 0;
+              const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+              
+              window.scrollTo({
+                top: targetPosition - headerHeight - 20, 
+                behavior: 'smooth'
+              });
+            }
           }
         });
       });
@@ -1075,7 +1066,7 @@
           <div class="glass rounded-2xl p-8 backdrop-blur-lg">
             <div class="flex items-center mb-6">
               <div class="w-16 h-16 mr-4 rounded-full gradient-border overflow-hidden">
-                <img src="/image/z3connect.bmp" alt="Z3Connect" class="w-full h-full object-cover">
+                <img src="/image/logo.jpg" alt="Z3Connect" class="w-full h-full object-cover">
               </div>
               <div>
                 <h3 class="text-xl md:text-2xl font-display font-medium">Z3Connect</h3>
@@ -1093,7 +1084,7 @@
                 </div>
                 <div>
                   <div class="text-sm uppercase tracking-wider text-white/50 mb-1">WhatsApp</div>
-                  <a href="https://wa.me/919360220928" target="_blank" rel="noopener" class="text-white hover:text-gradient transition-colors">+91 9360220928</a>
+                  <a href="https://wa.me/918110960489" target="_blank" rel="noopener" class="text-white hover:text-gradient transition-colors">+91 8110960489</a>
                 </div>
               </div>
               
@@ -1126,7 +1117,7 @@
             
             <!-- Quick contact buttons -->
             <div class="mt-8 flex flex-col sm:flex-row sm:items-center gap-4">
-              <a href="https://wa.me/919360220928" target="_blank" rel="noopener" class="btn-glow flex items-center justify-center px-5 py-3 bg-white/10 hover:bg-white/20 rounded-lg transition-colors backdrop-blur-sm">
+              <a href="https://wa.me/918110960489" target="_blank" rel="noopener" class="btn-glow flex items-center justify-center px-5 py-3 bg-white/10 hover:bg-white/20 rounded-lg transition-colors backdrop-blur-sm">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                 </svg>
@@ -1161,19 +1152,17 @@
                 </div>
                 
                 <!-- Service selection -->
-                <div class="relative">
-                  <select id="service" class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-transparent appearance-none pr-8">
-                    <option value="" class="text-gray-500">Select a service</option>
+                <div class="mb-4">
+                  <label for="service" class="block text-sm uppercase tracking-wider text-white/50 mb-2">I'm interested in</label>
+                  <select id="service" class="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-transparent">
+                    <option value="">Select a service</option>
                     <option value="website">Website Development</option>
                     <option value="app">Mobile App Development</option>
                     <option value="billing">Billing System</option>
                     <option value="management">Management Software</option>
-                    <option value="automation">Automation/option>
+                    <option value="automation">Automation & WhatsApp Tools</option>
                     <option value="other">Other Project</option>
                   </select>
-                  <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-white/50">
-                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
-                  </div>
                 </div>
                 
                 <div class="mb-6">
@@ -1243,12 +1232,12 @@
         
         <!-- Social links -->
         <div class="flex items-center space-x-4">
-          <a href="https://www.linkedin.com/company/z3connect/" class="w-10 h-10 glass rounded-full flex items-center justify-center hover:bg-white/10 transition-colors">
+          <a href="#" class="w-10 h-10 glass rounded-full flex items-center justify-center hover:bg-white/10 transition-colors">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z" />
             </svg>
           </a>
-          <a href="mailto:z3connect.z3connect@gmail.com" class="w-10 h-10 glass rounded-full flex items-center justify-center hover:bg-white/10 transition-colors">
+          <a href="mailto:z3connect.office@gmail.com" class="w-10 h-10 glass rounded-full flex items-center justify-center hover:bg-white/10 transition-colors">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
             </svg>
@@ -1258,7 +1247,7 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
             </svg>
           </a>
-          <a href="https://wa.me/919360220928" target="_blank" rel="noopener" class="w-10 h-10 glass rounded-full flex items-center justify-center hover:bg-white/10 transition-colors">
+          <a href="https://wa.me/918110960489" target="_blank" rel="noopener" class="w-10 h-10 glass rounded-full flex items-center justify-center hover:bg-white/10 transition-colors">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
             </svg>
@@ -1280,9 +1269,9 @@
 
   <!-- JavaScript for footer animations and functionality -->
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', () => { // This merges with other DOMContentLoaded listeners
       // Back to top functionality
-      const backToTopButton = document.querySelector('a[href="#"]');
+      const backToTopButton = document.querySelector('footer a[href="#"]'); 
       
       if (backToTopButton) {
         backToTopButton.addEventListener('click', (e) => {
@@ -1295,62 +1284,46 @@
       }
       
       // Form validation
-      const contactForm = document.querySelector('form');
+      const contactForm = document.querySelector('footer form'); 
       
       if (contactForm) {
         contactForm.addEventListener('submit', (e) => {
           e.preventDefault();
           
-          // Basic validation
           const nameInput = document.getElementById('name');
           const emailInput = document.getElementById('email');
           const messageInput = document.getElementById('message');
           
-          if (nameInput.value && emailInput.value && messageInput.value) {
-            // In a real implementation, you would send the form data to your server
+          let isValid = true;
+          let missingFields = [];
+
+          if (!nameInput.value.trim()) {
+            isValid = false;
+            missingFields.push("Name");
+          }
+          if (!emailInput.value.trim()) {
+            isValid = false;
+            missingFields.push("Email");
+          } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value.trim())) { 
+            isValid = false;
+            alert('Please enter a valid email address.');
+          }
+          if (!messageInput.value.trim()) {
+            isValid = false;
+            missingFields.push("Message");
+          }
+          
+          if (isValid) {
             alert('Thanks for your message! We\'ll get back to you soon.');
             contactForm.reset();
           } else {
-            alert('Please fill in all required fields before sending your message.');
+            if (missingFields.length > 0) {
+              alert('Please fill in the following required fields: ' + missingFields.join(', ') + '.');
+            }
           }
         });
       }
     });
   </script>
-
-  <style>
-    /* ... your existing styles ... */
-
-    /* Style for select options - attempts to make them dark-themed */
-    select option {
-      background-color: #1f2937; /* Tailwind gray-800 - a dark background */
-      color: #ffffff;          /* White text */
-    }
-
-    /* You might want a slightly different color for the placeholder option if it's selectable */
-    select option[value=""] {
-        color: #9ca3af; /* Tailwind gray-400 for placeholder text */
-    }
-
-    /* Styling the select box itself (already in your code) */
-    .custom-select-style {
-        background-color: rgba(255, 255, 255, 0.05); /* bg-white/5 */
-        border: 1px solid rgba(255, 255, 255, 0.1); /* border-white/10 */
-        border-radius: 0.5rem; /* rounded-lg */
-        padding-left: 1rem; /* px-4 */
-        padding-right: 1rem; /* px-4 */
-        padding-top: 0.75rem; /* py-3 */
-        padding-bottom: 0.75rem; /* py-3 */
-        width: 100%; /* w-full */
-        color: #fff; /* Added for explicit text color on the select box */
-    }
-    .custom-select-style:focus {
-        outline: none;
-        border-color: #3b82f6; /* focus:ring-brand-blue (adjust if brand-blue is different) */
-        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3); /* focus:ring-brand-blue/30 */
-        /* background-color: rgba(255, 255, 255, 0.07); /* Slightly lighter on focus */
-    }
-
-  </style>
 </body>
 </html>

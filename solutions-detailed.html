@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Solutions - Z3Connect</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="icon" href="/image/icon/z3icon.ico" type="image/x-icon" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            'sans': ['Plus Jakarta Sans', 'sans-serif'],
+            'display': ['Clash Display', 'sans-serif'],
+          },
+          colors: {
+            glass: { light: 'rgba(255, 255, 255, 0.05)', medium: 'rgba(255, 255, 255, 0.1)' },
+            'brand-blue': '#3b82f6',
+            'brand-purple': '#8b5cf6',
+            'brand-teal': '#14b8a6',
+            'brand-pink': '#ec4899',
+            'brand-orange': '#f97316',
+          },
+          animation: {
+            'blur-in': 'blurInAnimation 1s ease-out forwards',
+            'slide-up-content': 'slideUpContentAnimation 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+            'fade-in-item': 'fadeInItemAnimation 0.6s ease-out forwards',
+            'float-subtle': 'floatSubtleAnimation 8s ease-in-out infinite',
+          },
+          keyframes: {
+            blurInAnimation: {
+              '0%': { opacity: 0, filter: 'blur(8px)', transform: 'translateY(-10px)' },
+              '100%': { opacity: 1, filter: 'blur(0px)', transform: 'translateY(0)' }
+            },
+            slideUpContentAnimation: {
+              '0%': { transform: 'translateY(50px)', opacity: 0 },
+              '100%': { transform: 'translateY(0)', opacity: 1 }
+            },
+            fadeInItemAnimation: {
+              '0%': { opacity: 0, transform: 'scale(0.95) translateY(10px)' },
+              '100%': { opacity: 1, transform: 'scale(1) translateY(0)' }
+            },
+            floatSubtleAnimation: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-8px)' }
+            }
+          },
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=clash-display@200,400,700,500,600,300&display=swap" rel="stylesheet">
+  <style>
+    html { scroll-behavior: smooth; scroll-padding-top: 6rem; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #000; color: #fff; overflow-x: hidden; }
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: #000; }
+    ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.3); border-radius: 10px; }
+    .glass { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
+    .glass-dark { background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.05); }
+    .text-gradient { background: linear-gradient(to right, #fff, rgba(255, 255, 255, 0.7)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .noise { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIGJhc2VGcmVxdWVuY3k9Ii43NSIgc3RpdGNoVGlsZXM9InN0aXRjaCIgdHlwZT0iZnJhY3RhbE5vaXNlIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxwYXRoIGQ9Ik0wIDBoMzAwdjMwMEgweiIgZmlsdGVyPSJ1cmwoI2EpIiBvcGFjaXR5PSIuMDUiLz48L3N2Zz4='); pointer-events: none; z-index: 100; opacity: 0.4; }
+    .progress-bar { position: fixed; top: 0; left: 0; height: 2px; background: linear-gradient(to right, rgba(59, 130, 246, 0.7), #3b82f6); z-index: 999; width: 0%; transition: width 0.1s ease; }
+    .mobile-menu { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.95); backdrop-filter: blur(10px); z-index: 100; display: flex; flex-direction: column; justify-content: center; align-items: center; transform: translateY(-100%); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+    .mobile-menu.active { transform: translateY(0); }
+    .btn-primary { transition: background-color 0.3s ease, transform 0.2s ease; }
+    .btn-primary:hover { transform: translateY(-2px); }
+    .btn-primary:active { transform: translateY(0px) scale(0.98); }
+    
+    .nav-link { display: inline-block; padding: 0.5rem 1rem; border-radius: 0.5rem; font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.7; transition: all 0.3s ease; }
+    .nav-link:hover { opacity: 1; background: rgba(255, 255, 255, 0.05); }
+    .nav-link.active { opacity: 1; font-weight: 600; color: #3b82f6; }
+    .mobile-nav-link { font-size: 1.875rem; font-family: 'Clash Display', sans-serif; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.8; transition: opacity 0.3s ease, color 0.3s ease; }
+    .mobile-nav-link:hover { opacity: 1; }
+    .mobile-nav-link.active { color: #3b82f6; opacity: 1; font-weight: 600; }
+
+    .solution-card { opacity: 0; /* Initial state for animation */ }
+    .solution-icon-bg {
+      width: 4rem; /* w-16 */
+      height: 4rem; /* h-16 */
+      border-radius: 0.75rem; /* rounded-xl */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem; /* mb-4 */
+      transition: transform 0.3s ease;
+    }
+    .solution-card:hover .solution-icon-bg {
+        transform: scale(1.1) rotate(-5deg);
+    }
+  </style>
+</head>
+<body class="bg-black text-white">
+  <div class="noise"></div>
+  <div class="progress-bar"></div>
+
+  <header class="fixed top-0 left-0 w-full z-50 px-4 py-4 glass-dark">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+      <a href="index.html" class="text-xl font-display font-medium tracking-wider"><span class="text-gradient">Z3Connect</span></a>
+      <nav class="hidden md:block">
+        <ul class="flex items-center space-x-1">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="solutions-detailed.html" class="nav-link active">Solutions</a></li>
+          <li><a href="portfolio.html" class="nav-link">Portfolio</a></li>
+          <li><a href="products.html" class="nav-link">Our Products</a></li>     
+          <li><a href="get-quote.html" class="nav-link">Get a Quote</a></li>
+        </ul>
+      </nav>
+      <button id="mobile-menu-button" class="md:hidden glass p-2 rounded-lg" aria-label="Menu">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16" /></svg>
+      </button>
+    </div>
+  </header>
+
+  <div id="mobile-menu" class="mobile-menu">
+    <button id="mobile-menu-close" class="absolute top-5 right-5 p-3 glass rounded-full">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12" /></svg>
+    </button>
+    <ul class="flex flex-col items-center space-y-6">
+      <li><a href="index.html" class="mobile-nav-link">Home</a></li>
+      <li><a href="solutions-detailed.html" class="mobile-nav-link active">Solutions</a></li>
+      <li><a href="portfolio.html" class="mobile-nav-link">Portfolio</a></li>
+      <li><a href="products.html" class="mobile-nav-link">Our Products</a></li>
+      <li><a href="get-quote.html" class="mobile-nav-link">Get a Quote</a></li>
+    </ul>
+    <div class="absolute bottom-10 text-center text-sm uppercase tracking-widest opacity-50">© 2025 Z3Connect</div>
+  </div>
+  
+  <main class="pt-24 md:pt-32 pb-16 md:pb-24 px-4 md:px-6">
+    <div class="max-w-6xl mx-auto">
+      
+      <section class="text-center mb-16 md:mb-24 animate-blur-in">
+        <span class="text-sm uppercase tracking-widest text-brand-blue mb-2 block font-semibold">Our Expertise</span>
+        <h1 class="font-display text-4xl sm:text-5xl md:text-7xl font-bold mb-6">
+          Tailored <span class="text-gradient">Digital Solutions</span>
+        </h1>
+        <p class="text-lg md:text-xl text-white/70 max-w-3xl mx-auto">
+          From custom software that streamlines your operations to engaging web experiences and innovative digital tools, Z3Connect crafts solutions designed for your unique business challenges and goals.
+        </p>
+      </section>
+
+      <!-- Solution Categories Container -->
+      <div class="space-y-16 md:space-y-24">
+
+        <!-- Category: Custom Software Development -->
+        <section class="opacity-0 animate-slide-up-content" style="animation-delay: 0.2s;">
+          <div class="text-center mb-10 md:mb-12">
+            <h2 class="font-display text-3xl sm:text-4xl md:text-5xl font-semibold text-brand-purple">Custom Software Development</h2>
+            <p class="mt-3 text-white/70 max-w-2xl mx-auto">Bespoke applications built from the ground up to perfectly match your specific workflows and requirements.</p>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- PC Only Software -->
+            <article class="solution-card glass rounded-xl p-6 md:p-8 animate-fade-in-item" style="animation-delay: 0.3s;">
+              <div class="solution-icon-bg bg-brand-purple/10"><svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-brand-purple" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg></div>
+              <h3 class="font-display text-xl font-semibold mb-2">Desktop Applications (PC)</h3>
+              <p class="text-white/70 text-sm mb-4">Powerful, native applications for Windows, macOS, or Linux, designed for performance, offline capabilities, and deep system integration.</p>
+              <a href="get-quote.html?projectType=custom_software_pc" class="btn-primary inline-block mt-auto text-sm font-medium text-brand-purple border border-brand-purple/30 hover:bg-brand-purple/10 px-4 py-2 rounded-lg">Request for PC Software</a>
+            </article>
+            <!-- Mobile Only Software -->
+            <article class="solution-card glass rounded-xl p-6 md:p-8 animate-fade-in-item" style="animation-delay: 0.4s;">
+              <div class="solution-icon-bg bg-brand-purple/10"><svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-brand-purple" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" /></svg></div>
+              <h3 class="font-display text-xl font-semibold mb-2">Mobile Applications</h3>
+              <p class="text-white/70 text-sm mb-4">Intuitive and engaging native or cross-platform apps for iOS and Android, delivering seamless user experiences on the go.</p>
+              <a href="get-quote.html?projectType=mobile_app" class="btn-primary inline-block mt-auto text-sm font-medium text-brand-purple border border-brand-purple/30 hover:bg-brand-purple/10 px-4 py-2 rounded-lg">Request for Mobile App</a>
+            </article>
+            <!-- Both PC & Mobile -->
+            <article class="solution-card glass rounded-xl p-6 md:p-8 animate-fade-in-item" style="animation-delay: 0.5s;">
+                <div class="solution-icon-bg bg-brand-purple/10">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-brand-purple" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21M9 17.25v-1.007a3 3 0 00.879-2.122L7.5 15M21 13.5h-6.75M21 13.5c-.621 0-1.242-.096-1.853-.286M14.25 13.5c.621 0 1.242.096 1.853.286M12 13.5V9.75m0 3.75c-.32.093-.665.146-1.02.146m1.02-.146A3.752 3.752 0 0012 15c0 .966.354 1.843.937 2.5M12 15c-.32-.093-.665-.146-1.02-.146m1.02.146A3.752 3.752 0 0112 13.5m0-3.75c.32.093.665.146 1.02.146m-1.02-.146A3.752 3.752 0 0112 9.75c0-.966-.354-1.843-.937-2.5M12 9.75c.32-.093.665-.146 1.02-.146M3.75 13.5h6.75m0 0V9.75M3.75 13.5c.621 0 1.242-.096 1.853-.286M10.5 13.5c-.621 0-1.242.096-1.853-.286M7.5 15V9.75" />
+                    </svg>
+                </div>
+              <h3 class="font-display text-xl font-semibold mb-2">Integrated Systems (PC & Mobile)</h3>
+              <p class="text-white/70 text-sm mb-4">Comprehensive solutions that span across desktop and mobile platforms, ensuring synchronized data and consistent functionality.</p>
+              <a href="get-quote.html?projectType=custom_software_integrated" class="btn-primary inline-block mt-auto text-sm font-medium text-brand-purple border border-brand-purple/30 hover:bg-brand-purple/10 px-4 py-2 rounded-lg">Request Integrated System</a>
+            </article>
+          </div>
+        </section>
+
+        <!-- Category: Billing Systems -->
+        <section class="opacity-0 animate-slide-up-content" style="animation-delay: 0.3s;">
+          <div class="text-center mb-10 md:mb-12">
+            <h2 class="font-display text-3xl sm:text-4xl md:text-5xl font-semibold text-brand-teal">Billing & Invoicing Systems</h2>
+            <p class="mt-3 text-white/70 max-w-2xl mx-auto">Streamline your financial operations with custom billing, invoicing, and payment management solutions.</p>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+             <!-- PC Only Billing -->
+            <article class="solution-card glass rounded-xl p-6 md:p-8 animate-fade-in-item" style="animation-delay: 0.4s;">
+              <div class="solution-icon-bg bg-brand-teal/10"><svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-brand-teal" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z" /></svg></div>
+              <h3 class="font-display text-xl font-semibold mb-2">Desktop Billing Software</h3>
+              <p class="text-white/70 text-sm mb-4">Robust PC-based billing systems for comprehensive financial management, ideal for businesses needing detailed local data processing.</p>
+              <a href="get-quote.html?projectType=billing_system_pc" class="btn-primary inline-block mt-auto text-sm font-medium text-brand-teal border border-brand-teal/30 hover:bg-brand-teal/10 px-4 py-2 rounded-lg">Quote for Desktop Billing</a>
+            </article>
+            <!-- Mobile Only Billing -->
+            <article class="solution-card glass rounded-xl p-6 md:p-8 animate-fade-in-item" style="animation-delay: 0.5s;">
+              <div class="solution-icon-bg bg-brand-teal/10"><svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-brand-teal" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5M10.5 19.5h3m-3-15V3h3V1.5m-3 3.75h.008v.008H7.5v-.008zm3.75 0h.008v.008h-.008v-.008zm0 3.75h.008v.008h-.008V9zm0 3.75h.008v.008h-.008v-.008zm0 3.75h.008v.008h-.008v-.008zm-3.75 3.75h.008v.008H7.5v-.008zm0-3.75h.008v.008H7.5V15zm0-3.75h.008v.008H7.5V12zm0-3.75h.008v.008H7.5V9z" /></svg></div>
+              <h3 class="font-display text-xl font-semibold mb-2">Mobile Billing Apps</h3>
+              <p class="text-white/70 text-sm mb-4">Convenient billing and invoicing on the go. Perfect for freelancers, field services, and small businesses needing mobile flexibility.</p>
+              <a href="get-quote.html?projectType=billing_system_mobile" class="btn-primary inline-block mt-auto text-sm font-medium text-brand-teal border border-brand-teal/30 hover:bg-brand-teal/10 px-4 py-2 rounded-lg">Quote for Mobile Billing</a>
+            </article>
+            <!-- Both PC & Mobile Billing -->
+            <article class="solution-card glass rounded-xl p-6 md:p-8 animate-fade-in-item" style="animation-delay: 0.6s;">
+              <div class="solution-icon-bg bg-brand-teal/10"><svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-brand-teal" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 01-2.25 2.25h-1.5m-16.5-9H8.25m0 0V3.75c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v3.75m0 0H6.75m-5.25 9H15M3.75 12H6" /></svg></div>
+              <h3 class="font-display text-xl font-semibold mb-2">Cloud-Synced Billing Platforms</h3>
+              <p class="text-white/70 text-sm mb-4">Integrated billing solutions accessible from both PC and mobile devices, ensuring your financial data is always up-to-date and available.</p>
+              <a href="get-quote.html?projectType=billing_system_cloud" class="btn-primary inline-block mt-auto text-sm font-medium text-brand-teal border border-brand-teal/30 hover:bg-brand-teal/10 px-4 py-2 rounded-lg">Quote for Cloud Billing</a>
+            </article>
+          </div>
+        </section>
+
+        <!-- Category: Web Solutions -->
+        <section class="opacity-0 animate-slide-up-content" style="animation-delay: 0.4s;">
+          <div class="text-center mb-10 md:mb-12">
+            <h2 class="font-display text-3xl sm:text-4xl md:text-5xl font-semibold text-brand-pink">Web Solutions</h2>
+            <p class="mt-3 text-white/70 max-w-2xl mx-auto">Crafting impactful online presences, from informational websites to complex, data-driven web applications.</p>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <article class="solution-card glass rounded-xl p-6 md:p-8 animate-fade-in-item" style="animation-delay: 0.5s;">
+              <div class="solution-icon-bg bg-brand-pink/10"><svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-brand-pink" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A11.978 11.978 0 0112 16.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0021 12c0-.778.099-1.533.284-2.253M12 16.5c1.533 0 2.998-.28 4.288-.788" /></svg></div>
+              <h3 class="font-display text-xl font-semibold mb-2">Website Development</h3>
+              <p class="text-white/70 text-sm mb-4">Visually stunning and responsive websites that effectively communicate your brand, from simple portfolios to corporate sites.</p>
+              <a href="get-quote.html?projectType=website" class="btn-primary inline-block mt-auto text-sm font-medium text-brand-pink border border-brand-pink/30 hover:bg-brand-pink/10 px-4 py-2 rounded-lg">Discuss Your Website</a>
+            </article>
+            <article class="solution-card glass rounded-xl p-6 md:p-8 animate-fade-in-item" style="animation-delay: 0.6s;">
+              <div class="solution-icon-bg bg-brand-pink/10"><svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-brand-pink" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 7.5l3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0021 18V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v12a2.25 2.25 0 002.25 2.25z" /></svg></div>
+              <h3 class="font-display text-xl font-semibold mb-2">Web Applications</h3>
+              <p class="text-white/70 text-sm mb-4">Complex, interactive, and scalable web-based software like SaaS platforms, custom portals, and enterprise dashboards.</p>
+              <a href="get-quote.html?projectType=web_application" class="btn-primary inline-block mt-auto text-sm font-medium text-brand-pink border border-brand-pink/30 hover:bg-brand-pink/10 px-4 py-2 rounded-lg">Plan Your Web App</a>
+            </article>
+          </div>
+        </section>
+
+        <!-- Category: Digital Products & Tools -->
+        <section class="opacity-0 animate-slide-up-content" style="animation-delay: 0.5s;">
+          <div class="text-center mb-10 md:mb-12">
+            <h2 class="font-display text-3xl sm:text-4xl md:text-5xl font-semibold text-brand-orange">Digital Products & Tools</h2>
+            <p class="mt-3 text-white/70 max-w-2xl mx-auto">Innovative digital solutions to enhance your brand, streamline processes, or provide value to your audience.</p>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <article class="solution-card glass rounded-xl p-6 md:p-8 animate-fade-in-item" style="animation-delay: 0.6s;">
+              <div class="solution-icon-bg bg-brand-orange/10"><svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-brand-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75" /></svg></div>
+              <h3 class="font-display text-xl font-semibold mb-2">Automation Tools</h3>
+              <p class="text-white/70 text-sm mb-4">Custom scripts, integrations, and tools (including WhatsApp automation) to automate repetitive tasks and improve efficiency.</p>
+              <a href="get-quote.html?projectType=automation" class="btn-primary inline-block mt-auto text-sm font-medium text-brand-orange border border-brand-orange/30 hover:bg-brand-orange/10 px-4 py-2 rounded-lg">Automate Your Business</a>
+            </article>
+            <article class="solution-card glass rounded-xl p-6 md:p-8 animate-fade-in-item" style="animation-delay: 0.7s;">
+              <div class="solution-icon-bg bg-brand-orange/10"><svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-brand-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg></div>
+              <h3 class="font-display text-xl font-semibold mb-2">Digital Business Cards</h3>
+              <p class="text-white/70 text-sm mb-4">Modern, interactive digital vCards to make a lasting impression and easily share your contact information.</p>
+              <a href="get-quote.html?projectType=digital_card" class="btn-primary inline-block mt-auto text-sm font-medium text-brand-orange border border-brand-orange/30 hover:bg-brand-orange/10 px-4 py-2 rounded-lg">Get Your Digital Card</a>
+            </article>
+             <article class="solution-card glass rounded-xl p-6 md:p-8 animate-fade-in-item" style="animation-delay: 0.8s;">
+              <div class="solution-icon-bg bg-brand-orange/10"><svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-brand-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25A2.25 2.25 0 0113.5 8.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" /></svg></div>
+              <h3 class="font-display text-xl font-semibold mb-2">Other Digital Products</h3>
+              <p class="text-white/70 text-sm mb-4">From niche utility apps to specialized digital tools, we can help bring your unique digital product idea to life.</p>
+              <a href="get-quote.html?projectType=other_digital_product" class="btn-primary inline-block mt-auto text-sm font-medium text-brand-orange border border-brand-orange/30 hover:bg-brand-orange/10 px-4 py-2 rounded-lg">Discuss Your Product</a>
+            </article>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- General CTA -->
+      <section class="mt-20 md:mt-32 text-center opacity-0 animate-slide-up-content" style="animation-delay: 0.6s;">
+        <h2 class="font-display text-3xl sm:text-4xl font-semibold mb-6">
+          Ready to <span class="text-gradient">Transform Your Ideas</span> into Reality?
+        </h2>
+        <p class="text-white/70 max-w-xl mx-auto mb-10">
+          No matter the complexity or scale of your project, Z3Connect has the expertise to deliver exceptional digital solutions.
+        </p>
+        <a href="get-quote.html" class="btn-primary inline-block bg-brand-blue hover:bg-brand-blue/80 text-white font-semibold px-10 py-4 rounded-lg text-base tracking-wide shadow-lg shadow-brand-blue/30">
+          Let's Discuss Your Project
+        </a>
+      </section>
+
+    </div>
+  </main>
+
+ <footer class="relative pt-20 pb-10 px-4 md:px-16 overflow-hidden mt-20">
+    <div class="absolute inset-0 bg-gradient-to-t from-black via-indigo-950/10 to-black"></div>
+    <div class="max-w-7xl mx-auto relative z-10">
+      <div class="mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center">
+        <div class="mb-6 md:mb-0">
+          <div class="text-center md:text-left">
+            <a href="index.html" class="text-xl font-display font-medium text-gradient">Z3Connect</a>
+          </div>
+          <div class="text-white/50 text-sm mt-2 text-center md:text-left">
+            © 2025 All rights reserved
+          </div>
+        </div>
+        <div class="flex items-center space-x-4">
+           <a href="index.html#contact" class="w-10 h-10 glass rounded-full flex items-center justify-center hover:bg-white/10 transition-colors" title="Contact Us">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+          </a>
+          <a href="https://github.com/yourusername" target="_blank" rel="noopener" class="w-10 h-10 glass rounded-full flex items-center justify-center hover:bg-white/10 transition-colors" title="GitHub">
+             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+          </a>
+          <a href="https://wa.me/919360220928" target="_blank" rel="noopener" class="w-10 h-10 glass rounded-full flex items-center justify-center hover:bg-white/10 transition-colors" title="WhatsApp">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>
+          </a>
+        </div>
+      </div>
+      <div class="flex justify-center mt-10">
+        <a href="#" id="backToTopSolutions" class="inline-flex items-center px-4 py-2 glass rounded-full text-sm hover:glass-hover transition-all">
+          <span class="mr-2">Back to top</span>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" /></svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Mobile Menu
+      const mobileMenuButton = document.getElementById('mobile-menu-button');
+      const mobileMenuClose = document.getElementById('mobile-menu-close');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+      
+      if (mobileMenuButton && mobileMenu && mobileMenuClose) {
+        mobileMenuButton.addEventListener('click', () => { mobileMenu.classList.add('active'); document.body.style.overflow = 'hidden'; });
+        mobileMenuClose.addEventListener('click', () => { mobileMenu.classList.remove('active'); document.body.style.overflow = ''; });
+        mobileLinks.forEach(link => {
+          link.addEventListener('click', () => { mobileMenu.classList.remove('active'); document.body.style.overflow = ''; });
+        });
+      }
+      
+      // Progress Bar
+      const progressBar = document.querySelector('.progress-bar');
+      window.addEventListener('scroll', () => {
+        if (progressBar) {
+          const scrollPercentage = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+          progressBar.style.width = scrollPercentage + '%';
+        }
+      });
+
+      // Back to Top
+      const backToTopButton = document.getElementById('backToTopSolutions');
+      if (backToTopButton) {
+        backToTopButton.addEventListener('click', (e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+      }
+
+      // Intersection Observer for reveal animations
+      const revealElements = document.querySelectorAll('.animate-slide-up-content, .animate-fade-in-item, .animate-blur-in');
+      const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const delayString = entry.target.style.animationDelay;
+            let delayMs = 0;
+            if (delayString) {
+                delayMs = parseFloat(delayString) * 1000;
+            }
+            
+            setTimeout(() => {
+                entry.target.style.opacity = '1'; // Make it visible
+                // Trigger animation by adding class or directly if defined in JS
+                if(entry.target.classList.contains('animate-slide-up-content')) entry.target.classList.add('animate-slide-up-content');
+                if(entry.target.classList.contains('animate-fade-in-item')) entry.target.classList.add('animate-fade-in-item');
+                if(entry.target.classList.contains('animate-blur-in')) entry.target.classList.add('animate-blur-in');
+
+            }, delayMs);
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+
+      revealElements.forEach(el => {
+        // Ensure elements start hidden for JS-controlled reveal
+        if (el.classList.contains('animate-slide-up-content') || el.classList.contains('animate-fade-in-item')) {
+            el.style.opacity = '0'; 
+        }
+        revealObserver.observe(el);
+      });
+
+    });
+  </script>
+</body>
+</html>

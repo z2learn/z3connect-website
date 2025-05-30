@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Get a Project Quote - Z3Connect</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="icon" href="/image/icon/z3icon.ico" type="image/x-icon" />
+  <script>
+    // Ensure this tailwind.config is exactly as provided or correctly modified.
+    // A syntax error here can break Tailwind's JIT compilation.
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            'sans': ['Plus Jakarta Sans', 'sans-serif'],
+            'display': ['Clash Display', 'sans-serif'],
+            'script': ['Caveat', 'cursive']
+          },
+          colors: {
+            glass: {
+              light: 'rgba(255, 255, 255, 0.05)',
+              medium: 'rgba(255, 255, 255, 0.1)',
+              strong: 'rgba(255, 255, 255, 0.2)'
+            },
+            'brand-blue': '#3b82f6',
+            'brand-purple': '#8b5cf6',
+          },
+          animation: {
+            'reveal-content': 'revealContentAnimation 0.8s ease-out forwards',
+            'blur-in-header': 'blurInHeaderAnimation 1s ease-out forwards',
+            'slide-up-form': 'slideUpFormAnimation 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards', // Added 0.2s delay
+            'fade-in-field': 'fadeInFieldAnimation 0.5s ease-out forwards',
+          },
+          keyframes: {
+            revealContentAnimation: {
+              '0%': { opacity: 0, transform: 'translateY(20px)' },
+              '100%': { opacity: 1, transform: 'translateY(0)' }
+            },
+            blurInHeaderAnimation: {
+              '0%': { opacity: 0, filter: 'blur(8px)', transform: 'translateY(-10px)' },
+              '100%': { opacity: 1, filter: 'blur(0px)', transform: 'translateY(0)' }
+            },
+            slideUpFormAnimation: {
+              '0%': { transform: 'translateY(60px)', opacity: 0 },
+              '100%': { transform: 'translateY(0)', opacity: 1 }
+            },
+            fadeInFieldAnimation: {
+              '0%': { opacity: 0, transform: 'translateY(10px)' },
+              '100%': { opacity: 1, transform: 'translateY(0)' }
+            }
+          },
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&family=Caveat:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=clash-display@200,400,700,500,600,300&display=swap" rel="stylesheet">
+  <style>
+    html { scroll-behavior: smooth; scroll-padding-top: 6rem; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #000; color: #fff; overflow-x: hidden; }
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: #000; }
+    ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.3); border-radius: 10px; }
+    .glass { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
+    .glass-dark { background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.05); }
+    .text-gradient { background: linear-gradient(to right, #fff, rgba(255, 255, 255, 0.7)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .noise { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIGJhc2VGcmVxdWVuY3k9Ii43NSIgc3RpdGNoVGlsZXM9InN0aXRjaCIgdHlwZT0iZnJhY3RhbE5vaXNlIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxwYXRoIGQ9Ik0wIDBoMzAwdjMwMEgweiIgZmlsdGVyPSJ1cmwoI2EpIiBvcGFjaXR5PSIuMDUiLz48L3N2Zz4='); pointer-events: none; z-index: 100; opacity: 0.4; }
+    .progress-bar { position: fixed; top: 0; left: 0; height: 2px; background: linear-gradient(to right, rgba(59, 130, 246, 0.7), #3b82f6); z-index: 999; width: 0%; transition: width 0.1s ease; }
+    .mobile-menu { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.95); backdrop-filter: blur(10px); z-index: 100; display: flex; flex-direction: column; justify-content: center; align-items: center; transform: translateY(-100%); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+    .mobile-menu.active { transform: translateY(0); }
+    .btn-glow { position: relative; z-index: 1; overflow: hidden; transition: background-color 0.3s ease, transform 0.2s ease; }
+    .btn-glow::after { content: ""; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: linear-gradient(45deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0) 100%); transform: rotate(45deg); z-index: -1; transition: transform 0.6s ease; transform-origin: center; }
+    .btn-glow:hover::after { transform: rotate(45deg) translateX(100%); }
+    .btn-glow:hover { background-color: rgba(59, 130, 246, 0.3); }
+    .btn-glow:active { transform: scale(0.98); }
+
+    .form-input, .form-select, .form-textarea {
+      background-color: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #fff;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+      border-radius: 0.5rem; /* rounded-lg */
+      padding: 0.625rem 1rem; /* px-4 py-2.5 */
+      width: 100%;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      outline: none;
+      border-color: #3b82f6; /* brand-blue */
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+      background-color: rgba(255, 255, 255, 0.07);
+    }
+    .form-select option {
+        background-color: #111827; /* A dark background for dropdown options */
+        color: #fff;
+    }
+    .form-label {
+        color: rgba(255, 255, 255, 0.7);
+        display: block;
+        font-size: 0.875rem; /* text-sm */
+        font-weight: 500; /* font-medium */
+        margin-bottom: 0.25rem; /* mb-1 */
+    }
+    .nav-link { display: inline-block; padding: 0.5rem 1rem; border-radius: 0.5rem; font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.7; transition: all 0.3s ease; }
+    .nav-link:hover { opacity: 1; background: rgba(255, 255, 255, 0.05); }
+    .nav-link.active { opacity: 1; font-weight: 600; color: #3b82f6; }
+    
+    .mobile-nav-link { font-size: 1.875rem; font-family: 'Clash Display', sans-serif; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.8; transition: opacity 0.3s ease, color 0.3s ease; }
+    .mobile-nav-link:hover { opacity: 1; }
+    .mobile-nav-link.active { color: #3b82f6; opacity: 1; font-weight: 600; }
+
+    /* Initial state for animated fields, animation applied by Tailwind utility */
+    .form-field-animated {
+        opacity: 0; /* Start hidden, animation will make it visible */
+    }
+  </style>
+</head>
+<body class="bg-black text-white">
+  <div class="noise"></div>
+  <div class="progress-bar"></div>
+
+  <header class="fixed top-0 left-0 w-full z-50 px-4 py-4 glass-dark">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+      <a href="index.html" class="text-xl font-display font-medium tracking-wider"><span class="text-gradient">Z3Connect</span></a>
+      <nav class="hidden md:block">
+        <ul class="flex items-center space-x-1">
+          <li><a href="index.html" class="nav-link">Home</a></li>
+          <li><a href="solutions-detailed.html" class="nav-link">Solutions</a></li>
+          <li><a href="portfolio.html" class="nav-link">Portfolio</a></li>
+          <li><a href="products.html" class="nav-link">Our Products</a></li>
+          <li><a href="get-quote.html" class="nav-link active">Get a Quote</a></li>
+        </ul>
+      </nav>
+      <button id="mobile-menu-button" class="md:hidden glass p-2 rounded-lg" aria-label="Menu">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16" /></svg>
+      </button>
+    </div>
+  </header>
+
+  <div id="mobile-menu" class="mobile-menu">
+    <button id="mobile-menu-close" class="absolute top-5 right-5 p-3 glass rounded-full">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12" /></svg>
+    </button>
+    <ul class="flex flex-col items-center space-y-6">
+      <li><a href="index.html#hero" class="mobile-nav-link">Home</a></li>
+      <li><a href="solutions-detailed.html" class="mobile-nav-link">Solutions</a></li>
+      <li><a href="open-source.html" class="mobile-nav-link">Open Source</a></li>
+      <li><a href="products.html" class="mobile-nav-link">Our Products</a></li>
+      <li><a href="get-quote.html" class="mobile-nav-link active">Get a Quote</a></li>
+    </ul>
+    <div class="absolute bottom-10 text-center text-sm uppercase tracking-widest opacity-50">© 2025 Z3Connect</div>
+  </div>
+  
+  <main class="pt-24 md:pt-32 pb-16 md:pb-24 px-4 md:px-6">
+    <div class="max-w-3xl mx-auto">
+      
+      <section class="text-center mb-12 md:mb-16 animate-blur-in-header">
+        <span class="text-sm uppercase tracking-widest text-brand-blue mb-2 block font-semibold">Let's Build Something Amazing</span>
+        <h1 class="font-display text-4xl sm:text-5xl md:text-6xl font-bold mb-4">
+          Get a <span class="text-gradient">Project Quote</span>
+        </h1>
+        <p class="text-lg md:text-xl text-white/70 max-w-2xl mx-auto">
+          Have an idea? Tell us about your project, and we'll get back to you with a personalized estimate or to schedule a consultation.
+        </p>
+      </section>
+
+      <section id="quoteFormContainer" class="glass rounded-xl p-6 sm:p-8 md:p-10 opacity-0 animate-slide-up-form">
+        <form id="projectQuoteForm" class="space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="form-field-animated animate-fade-in-field" style="animation-delay: 0.3s;">
+              <label for="fullName" class="form-label">Full Name <span class="text-red-500">*</span></label>
+              <input type="text" name="fullName" id="fullName" required class="form-input" placeholder="e.g., John Doe">
+            </div>
+            <div class="form-field-animated animate-fade-in-field" style="animation-delay: 0.35s;">
+              <label for="email" class="form-label">Email Address <span class="text-red-500">*</span></label>
+              <input type="email" name="email" id="email" required class="form-input" placeholder="e.g., john.doe@example.com">
+            </div>
+          </div>
+
+          <div class="form-field-animated animate-fade-in-field" style="animation-delay: 0.4s;">
+            <label for="contactNumber" class="form-label">Contact Number <span class="text-red-500">*</span></label>
+            <input type="tel" name="contactNumber" id="contactNumber" required class="form-input" placeholder="e.g., +1 555 123 4567">
+            <p class="text-xs text-white/50 mt-1">Please include your country code.</p>
+          </div>
+
+          <div class="form-field-animated animate-fade-in-field" style="animation-delay: 0.45s;">
+            <label for="projectType" class="form-label">Project Type <span class="text-red-500">*</span></label>
+            <select name="projectType" id="projectType" required class="form-select">
+              <option value="">Select a project type...</option>
+              <option value="web_development">Website Development</option>
+              <option value="mobile_app">Mobile App Development (Android/iOS)</option>
+              <option value="billing_system">Custom Billing System</option>
+              <option value="automation_tools">Automation & WhatsApp Tools</option>
+              <option value="management_software">Business Management Software</option>
+              <option value="ecommerce_solution">E-commerce Solution</option>
+              <option value="ui_ux_design">UI/UX Design</option>
+              <option value="consultation">Consultation</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          
+          <div class="form-field-animated animate-fade-in-field" style="animation-delay: 0.5s;">
+            <label for="projectDescription" class="form-label">Tell us about your project <span class="text-red-500">*</span></label>
+            <textarea name="projectDescription" id="projectDescription" rows="5" required class="form-textarea" placeholder="Describe your project, goals, key features, and any specific requirements..."></textarea>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="form-field-animated animate-fade-in-field" style="animation-delay: 0.55s;">
+              <label for="budget" class="form-label">Estimated Budget (Optional)</label>
+              <input type="number" name="budget" id="budget" class="form-input" placeholder="e.g., 5000">
+            </div>
+            <div class="form-field-animated animate-fade-in-field" style="animation-delay: 0.6s;">
+              <label for="currency" class="form-label">Budget Currency (Optional)</label>
+              <select name="currency" id="currency" class="form-select">
+                <option value="">Select currency...</option>
+                <option value="USD">USD - US Dollar</option>
+                <option value="EUR">EUR - Euro</option>
+                <option value="GBP">GBP - British Pound</option>
+                <option value="INR">INR - Indian Rupee</option>
+                <option value="CAD">CAD - Canadian Dollar</option>
+                <option value="AUD">AUD - Australian Dollar</option>
+                <option value="JPY">JPY - Japanese Yen</option>
+                <option value="CHF">CHF - Swiss Franc</option>
+                <option value="OTHER">Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-field-animated animate-fade-in-field" style="animation-delay: 0.65s;">
+            <label for="howHeard" class="form-label">How did you hear about us? (Optional)</label>
+            <input type="text" name="howHeard" id="howHeard" class="form-input" placeholder="e.g., Google, Referral, Social Media">
+          </div>
+
+          <div class="pt-4 form-field-animated animate-fade-in-field" style="animation-delay: 0.7s;">
+            <button type="submit" class="btn-glow w-full flex items-center justify-center px-6 py-3 bg-brand-blue hover:bg-brand-blue/80 text-white font-semibold rounded-lg text-base tracking-wide">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 16.571V11.691l4.455-1.059a1.5 1.5 0 001.291-2.312l-1.414-2.121a1 1 0 00-1.414-.203L10.894 7.448V2.553z" />
+              </svg>
+              Submit Your Inquiry
+            </button>
+          </div>
+        </form>
+        <div id="formSuccessMessage" class="hidden mt-8 p-4 bg-green-500/20 text-green-300 border border-green-500/30 rounded-lg text-center opacity-0 animate-reveal-content">
+          <h3 class="font-semibold text-lg mb-2">Thank You!</h3>
+          <p>Your project inquiry has been submitted successfully. We'll review your details and get back to you shortly.</p>
+        </div>
+      </section>
+    </div>
+  </main>
+
+ <footer class="relative pt-20 pb-10 px-4 md:px-16 overflow-hidden mt-20">
+    <div class="absolute inset-0 bg-gradient-to-t from-black via-indigo-950/10 to-black"></div>
+    <div class="max-w-7xl mx-auto relative z-10">
+      <div class="mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center">
+        <div class="mb-6 md:mb-0">
+          <div class="text-center md:text-left">
+            <a href="index.html" class="text-xl font-display font-medium text-gradient">Z3Connect</a>
+          </div>
+          <div class="text-white/50 text-sm mt-2 text-center md:text-left">
+            © 2025 All rights reserved
+          </div>
+        </div>
+        <div class="flex items-center space-x-4">
+           <a href="index.html#contact" class="w-10 h-10 glass rounded-full flex items-center justify-center hover:bg-white/10 transition-colors" title="Contact Us">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+          </a>
+          <a href="https://github.com/yourusername" target="_blank" rel="noopener" class="w-10 h-10 glass rounded-full flex items-center justify-center hover:bg-white/10 transition-colors" title="GitHub">
+             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+          </a>
+          <a href="https://wa.me/919360220928" target="_blank" rel="noopener" class="w-10 h-10 glass rounded-full flex items-center justify-center hover:bg-white/10 transition-colors" title="WhatsApp">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>
+          </a>
+        </div>
+      </div>
+      <div class="flex justify-center mt-10">
+        <a href="#" id="backToTopQuote" class="inline-flex items-center px-4 py-2 glass rounded-full text-sm hover:glass-hover transition-all">
+          <span class="mr-2">Back to top</span>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" /></svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Mobile Menu
+      const mobileMenuButton = document.getElementById('mobile-menu-button');
+      const mobileMenuClose = document.getElementById('mobile-menu-close');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+      
+      if (mobileMenuButton && mobileMenu && mobileMenuClose) {
+        mobileMenuButton.addEventListener('click', () => { mobileMenu.classList.add('active'); document.body.style.overflow = 'hidden'; });
+        mobileMenuClose.addEventListener('click', () => { mobileMenu.classList.remove('active'); document.body.style.overflow = ''; });
+        mobileLinks.forEach(link => {
+          link.addEventListener('click', () => { mobileMenu.classList.remove('active'); document.body.style.overflow = ''; });
+        });
+      }
+      
+      // Progress Bar
+      const progressBar = document.querySelector('.progress-bar');
+      window.addEventListener('scroll', () => {
+        if (progressBar) {
+          const scrollPercentage = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+          progressBar.style.width = scrollPercentage + '%';
+        }
+      });
+
+      // Back to Top
+      const backToTopButton = document.getElementById('backToTopQuote');
+      if (backToTopButton) {
+        backToTopButton.addEventListener('click', (e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+      }
+
+      // Form Submission Logic
+      const quoteForm = document.getElementById('projectQuoteForm');
+      const successMessage = document.getElementById('formSuccessMessage');
+      const formContainer = document.getElementById('quoteFormContainer');
+
+
+      if (quoteForm && successMessage && formContainer) {
+        quoteForm.addEventListener('submit', function(event) {
+          event.preventDefault(); 
+
+          let isValid = true;
+          const requiredFields = quoteForm.querySelectorAll('[required]');
+          requiredFields.forEach(field => {
+            if (!field.value.trim()) {
+              isValid = false;
+              field.style.borderColor = 'red'; 
+              // You might want to add a more noticeable error message below the field
+            } else {
+              field.style.borderColor = ''; 
+            }
+          });
+
+          if (!isValid) {
+            // Find the first invalid field and scroll to it for better UX
+            const firstInvalidField = quoteForm.querySelector('[required]:invalid, input[style*="border-color: red"], select[style*="border-color: red"], textarea[style*="border-color: red"]');
+            if (firstInvalidField) {
+                firstInvalidField.focus();
+                alert('Please fill in all required fields marked with *');
+            }
+            return;
+          }
+          
+          // Simulate sending data (replace with actual fetch to your backend)
+          // const formDataObject = Object.fromEntries(new FormData(quoteForm).entries());
+          // console.log("Form Data to send:", formDataObject);
+
+          // Hide form and show success message
+          quoteForm.classList.add('opacity-0', 'transition-opacity', 'duration-500');
+          setTimeout(() => {
+            quoteForm.style.display = 'none';
+            successMessage.style.display = 'block';
+            // Force reflow for animation
+            void successMessage.offsetWidth; 
+            successMessage.classList.remove('opacity-0');
+            successMessage.classList.add('animate-reveal-content'); // Ensure this class is applied for animation
+            
+            // Scroll to the success message if it's off-screen
+             setTimeout(() => { // Allow DOM to update
+                successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 100);
+
+          }, 500); // Match transition duration
+        });
+      } else {
+          console.error("Form, success message, or container not found");
+      }
+    });
+  </script>
+</body>
+</html>
